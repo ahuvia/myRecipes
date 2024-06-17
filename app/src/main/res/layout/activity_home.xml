@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- סרגל חיפוש -->
+    <EditText
+        android:id="@+id/editTextSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search_for_recipes"
+        android:layout_marginBottom="16dp"
+        android:autofillHints="search"
+        android:inputType="text"/>
+
+    <!-- כותרת מתכונים פופולריים -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Popular Recipes"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- תצוגה של מתכונים פופולריים -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+        <LinearLayout
+            android:id="@+id/popularRecipesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- פריטים של מתכונים יתווספו כאן -->
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- כותרת קטגוריות -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Categories"
+        android:textSize="18sp"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- תצוגה של קטגוריות -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/categoriesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- פריטים של קטגוריות יתווספו כאן -->
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

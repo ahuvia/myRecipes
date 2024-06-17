@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Recipes</string>
+    <string name="username_hint">שם משתמש</string>
+    <string name="email_hint">כתובת דוא"ל</string>
+    <string name="password_hint">סיסמה</string>
+    <string name="sign_up_button">הרשם</string>
+    <string name="search_for_recipes">חפש מתכונים</string>
+    <string name="popular_recipes">מתכונים פופולרים</string>
+</resources>

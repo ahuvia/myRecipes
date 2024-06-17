@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "360259724127",
+    "project_id": "my-recipes-ff5de",
+    "storage_bucket": "my-recipes-ff5de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:360259724127:android:06546078455a2e0afb0cea",
+        "android_client_info": {
+          "package_name": "com.example.myrecipes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuYTBtH7o8I7fzsMLAnMAc2ibwtHQbmA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
