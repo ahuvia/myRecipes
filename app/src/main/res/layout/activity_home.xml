@@ -1,105 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <!-- סרגל חיפוש -->
-    <EditText
-        android:id="@+id/editTextSearch"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/search_for_recipes"
-        android:layout_marginBottom="16dp"
-        android:autofillHints="search"
-        android:inputType="text"/>
+        android:padding="16dp">
 
-    <!-- כותרת מתכונים פופולריים -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Popular Recipes"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
+        <!-- סרגל חיפוש -->
+        <EditText
+            android:id="@+id/editTextSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_for_recipes"
+            android:autofillHints="search"
+            android:inputType="text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- תצוגה של מתכונים פופולריים -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
+        <!-- כותרת מתכונים פופולריים -->
+        <TextView
+            android:id="@+id/popularRecipesTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Popular Recipes"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/editTextSearch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- תצוגה של מתכונים פופולריים -->
         <LinearLayout
             android:id="@+id/popularRecipesLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/popularRecipesTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp">
             <!-- פריטים של מתכונים יתווספו כאן -->
         </LinearLayout>
-    </ScrollView>
 
-    <!-- כותרת קטגוריות -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Categories"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
+        <!-- כותרת קטגוריות -->
+        <TextView
+            android:id="@+id/categoriesTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Categories"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@id/popularRecipesLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="8dp"/>
 
-    <!-- תצוגה של קטגוריות -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <!-- תצוגה של קטגוריות -->
         <LinearLayout
             android:id="@+id/categoriesLayout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/categoriesTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp">
             <!-- פריטים של קטגוריות יתווספו כאן -->
         </LinearLayout>
-    </ScrollView>
 
-    <!-- שדות להזנת פרטי מתכון חדש -->
-    <EditText
-        android:id="@+id/editTextRecipeName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Recipe Name"
-        android:layout_marginBottom="16dp"/>
+        <!-- שדות להזנת פרטי מתכון חדש -->
+        <EditText
+            android:id="@+id/editTextRecipeName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Recipe Name"
+            app:layout_constraintTop_toBottomOf="@id/categoriesLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextRecipeDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Recipe Description"
-        android:layout_marginBottom="16dp"/>
+        <EditText
+            android:id="@+id/editTextRecipeDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Recipe Description"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextRecipeIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ingredients (comma separated)"
-        android:layout_marginBottom="16dp"/>
+        <EditText
+            android:id="@+id/editTextRecipeIngredients"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Ingredients (comma separated)"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextRecipeInstructions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Instructions"
-        android:layout_marginBottom="16dp"
-        android:inputType="textMultiLine"
-        android:minLines="3"/>
+        <EditText
+            android:id="@+id/editTextRecipeInstructions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Instructions"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeIngredients"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextRecipeImageUrl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Image URL"
-        android:layout_marginBottom="16dp"/>
+        <Button
+            android:id="@+id/buttonSelectImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Select Image"
+            app:layout_constraintTop_toBottomOf="@id/editTextRecipeInstructions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- כפתור לשמירת מתכון חדש -->
-    <Button
-        android:id="@+id/buttonSaveRecipe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Save Recipe"/>
-</LinearLayout>
+        <ImageView
+            android:id="@+id/imageViewRecipeImage"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toBottomOf="@id/buttonSelectImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone" />
+
+        <!-- כפתור לשמירת מתכון חדש -->
+        <Button
+            android:id="@+id/buttonSaveRecipe"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Save Recipe"
+            app:layout_constraintTop_toBottomOf="@id/imageViewRecipeImage"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
