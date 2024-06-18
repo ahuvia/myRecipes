@@ -5,6 +5,6 @@ data class Recipe(
     val description: String = "",
     val ingredients: List<String> = listOf(),
     val instructions: String = "",
-    val likes: Int = 0,
+    var likes: Int = 0,
     val imageUrl: String? = null
 )

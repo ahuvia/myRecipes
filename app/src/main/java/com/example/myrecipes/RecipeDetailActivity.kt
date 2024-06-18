@@ -7,12 +7,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
 class RecipeDetailActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
+    private lateinit var commentsAdapter: CommentsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,14 @@ class RecipeDetailActivity : AppCompatActivity() {
         val ingredientsTextView = findViewById<TextView>(R.id.textViewIngredients)
         val instructionsTextView = findViewById<TextView>(R.id.textViewInstructions)
         val likeButton = findViewById<Button>(R.id.buttonLike)
+        val likesCountTextView = findViewById<TextView>(R.id.textViewLikesCount)
         val commentButton = findViewById<Button>(R.id.buttonComment)
+        val commentsTitleTextView = findViewById<TextView>(R.id.textViewCommentsTitle)
+        val recyclerViewComments = findViewById<RecyclerView>(R.id.recyclerViewComments)
+
+        recyclerViewComments.layoutManager = LinearLayoutManager(this)
+        commentsAdapter = CommentsAdapter()
+        recyclerViewComments.adapter = commentsAdapter
 
         val recipeId = intent.getStringExtra("RECIPE_ID")
 
@@ -41,11 +51,14 @@ class RecipeDetailActivity : AppCompatActivity() {
                             recipeDescriptionTextView.text = recipe.description
                             ingredientsTextView.text = recipe.ingredients.joinToString("\n")
                             instructionsTextView.text = recipe.instructions
+                            likesCountTextView.text = "Likes: ${recipe.likes}"
 
                             likeButton.setOnClickListener {
                                 db.collection("recipes").document(recipeId)
                                     .update("likes", recipe.likes + 1)
                                     .addOnSuccessListener {
+                                        recipe.likes += 1
+                                        likesCountTextView.text = "Likes: ${recipe.likes}"
                                         Toast.makeText(this, "Liked!", Toast.LENGTH_SHORT).show()
                                     }
                                     .addOnFailureListener {
@@ -58,6 +71,8 @@ class RecipeDetailActivity : AppCompatActivity() {
                                 intent.putExtra("RECIPE_ID", recipeId)
                                 startActivity(intent)
                             }
+
+                            loadComments(recipeId)
                         }
                     }
                 }
@@ -67,5 +82,18 @@ class RecipeDetailActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "No recipe ID found", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun loadComments(recipeId: String) {
+        db.collection("recipes").document(recipeId).collection("comments")
+            .orderBy("timestamp")
+            .get()
+            .addOnSuccessListener { result ->
+                val comments = result.toObjects(Comment::class.java)
+                commentsAdapter.submitList(comments)
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error loading comments", Toast.LENGTH_SHORT).show()
+            }
     }
 }
