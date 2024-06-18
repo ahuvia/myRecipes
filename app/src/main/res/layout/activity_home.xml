@@ -57,4 +57,49 @@
             <!-- פריטים של קטגוריות יתווספו כאן -->
         </LinearLayout>
     </ScrollView>
+
+    <!-- שדות להזנת פרטי מתכון חדש -->
+    <EditText
+        android:id="@+id/editTextRecipeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Recipe Name"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextRecipeDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Recipe Description"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextRecipeIngredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ingredients (comma separated)"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextRecipeInstructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Instructions"
+        android:layout_marginBottom="16dp"
+        android:inputType="textMultiLine"
+        android:minLines="3"/>
+
+    <EditText
+        android:id="@+id/editTextRecipeImageUrl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Image URL"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- כפתור לשמירת מתכון חדש -->
+    <Button
+        android:id="@+id/buttonSaveRecipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save Recipe"/>
 </LinearLayout>
