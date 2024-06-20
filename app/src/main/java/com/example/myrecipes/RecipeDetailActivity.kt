@@ -40,10 +40,10 @@ class RecipeDetailActivity : AppCompatActivity() {
 
         val recipeId = intent.getStringExtra("RECIPE_ID")
 
-        if (recipeId != null) {
+        if (!recipeId.isNullOrEmpty()) {
             db.collection("recipes").document(recipeId).get()
                 .addOnSuccessListener { document ->
-                    if (document != null) {
+                    if (document != null && document.exists()) {
                         val recipe = document.toObject(Recipe::class.java)
                         if (recipe != null) {
                             recipeNameTextView.text = recipe.name
@@ -73,7 +73,11 @@ class RecipeDetailActivity : AppCompatActivity() {
                             }
 
                             loadComments(recipeId)
+                        } else {
+                            Toast.makeText(this, "Recipe not found", Toast.LENGTH_SHORT).show()
                         }
+                    } else {
+                        Toast.makeText(this, "Document does not exist", Toast.LENGTH_SHORT).show()
                     }
                 }
                 .addOnFailureListener {

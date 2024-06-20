@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#f7f7f7"
+    tools:context=".NewRecipeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add a New Recipe"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"
+            android:textColor="#333333"/>
+
+        <EditText
+            android:id="@+id/editTextRecipeName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Recipe Name"
+            android:background="@drawable/rounded_corner_background"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/editTextRecipeDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Recipe Description"
+            android:background="@drawable/rounded_corner_background"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/editTextRecipeIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingredients (comma separated)"
+            android:background="@drawable/rounded_corner_background"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <EditText
+            android:id="@+id/editTextRecipeInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Instructions"
+            android:background="@drawable/rounded_corner_background"
+            android:padding="12dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="textMultiLine"
+            android:minLines="3"/>
+
+        <!-- כפתור לבחירת תמונה -->
+        <Button
+            android:id="@+id/buttonSelectImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Image"
+            android:backgroundTint="#FF4081"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- תצוגה מקדימה של התמונה שנבחרה -->
+        <ImageView
+            android:id="@+id/imageViewRecipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/rounded_corner_background"/>
+
+        <!-- כפתור לשמירת מתכון חדש -->
+        <Button
+            android:id="@+id/buttonSaveRecipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Recipe"
+            android:backgroundTint="#FF4081"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</ScrollView>
