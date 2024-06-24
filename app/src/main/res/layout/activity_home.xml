@@ -32,20 +32,13 @@
         android:textColor="#333333"/>
 
     <!-- תצוגה של מתכונים פופולריים -->
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/popularRecipesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp">
-        <LinearLayout
-            android:id="@+id/popularRecipesLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/rounded_corner_background"
-            android:padding="8dp">
-            <!-- פריטים של מתכונים יתווספו כאן -->
-        </LinearLayout>
-    </ScrollView>
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_corner_background"
+        android:padding="8dp"/>
 
     <!-- כותרת קטגוריות -->
     <TextView

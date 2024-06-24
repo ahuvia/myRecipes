@@ -50,6 +50,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation ("com.squareup.picasso:picasso:2.71828")
     implementation ("com.google.firebase:firebase-storage:20.0.1")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     // Add the dependency for the Firebase Authentication library
     // When using the BoM, you don't specify versions in Firebase library dependencies
