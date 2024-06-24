@@ -2,15 +2,12 @@ package com.example.myrecipes
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,6 +23,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var storage: FirebaseStorage
     private lateinit var popularRecipesRecyclerView: RecyclerView
     private lateinit var popularRecipesAdapter: RecipeAdapter
+    private var allRecipes: MutableList<Recipe> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +46,16 @@ class HomeActivity : AppCompatActivity() {
             val intent = Intent(this, NewRecipeActivity::class.java)
             startActivityForResult(intent, 1001)
         }
+
+        searchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filterRecipes(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -73,12 +81,12 @@ class HomeActivity : AppCompatActivity() {
             .limit(10)
             .get()
             .addOnSuccessListener { result ->
-                val recipes = result.map { document ->
+                allRecipes = result.map { document ->
                     val recipe = document.toObject(Recipe::class.java)
                     recipe.id = document.id
                     recipe
-                }
-                popularRecipesAdapter = RecipeAdapter(recipes)
+                }.toMutableList()
+                popularRecipesAdapter = RecipeAdapter(allRecipes)
                 popularRecipesRecyclerView.adapter = popularRecipesAdapter
             }
             .addOnFailureListener { e ->
@@ -92,38 +100,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun addRecipeToList(recipe: Recipe) {
-        popularRecipesAdapter.addRecipe(recipe)
-    }
-}
-
-class RecipeAdapter(private val recipes: List<Recipe>) : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
-
-    class RecipeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.recipeImageView)
-        val textView: TextView = view.findViewById(R.id.recipeNameTextView)
+        allRecipes.add(0, recipe)
+        popularRecipesAdapter.notifyItemInserted(0)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_recipe, parent, false)
-        return RecipeViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        val recipe = recipes[position]
-        holder.textView.text = recipe.name
-        Glide.with(holder.itemView.context).load(recipe.imageUrl).into(holder.imageView)
-
-        holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, RecipeDetailActivity::class.java)
-            intent.putExtra("RECIPE_ID", recipe.id)
-            holder.itemView.context.startActivity(intent)
-        }
-    }
-
-    override fun getItemCount() = recipes.size
-
-    fun addRecipe(recipe: Recipe) {
-        (recipes as MutableList).add(0, recipe)
-        notifyItemInserted(0)
+    private fun filterRecipes(query: String) {
+        val filteredRecipes = allRecipes.filter { it.name.contains(query, ignoreCase = true) }
+        popularRecipesAdapter.updateRecipes(filteredRecipes)
     }
 }
