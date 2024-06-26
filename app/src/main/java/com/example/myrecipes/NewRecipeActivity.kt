@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,6 +17,7 @@ class NewRecipeActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
     private var selectedImageUri: Uri? = null
+    private lateinit var categorySpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +34,17 @@ class NewRecipeActivity : AppCompatActivity() {
         val selectImageButton = findViewById<Button>(R.id.buttonSelectImage)
         val recipeImageView = findViewById<ImageView>(R.id.imageViewRecipeImage)
         val saveRecipeButton = findViewById<Button>(R.id.buttonSaveRecipe)
+        categorySpinner = findViewById(R.id.spinnerCategory)
+
+        // הגדרת ה-Spinner עם הקטגוריות
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.recipe_categories,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            categorySpinner.adapter = adapter
+        }
 
         selectImageButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
@@ -48,13 +57,15 @@ class NewRecipeActivity : AppCompatActivity() {
             val description = recipeDescriptionEditText.text.toString()
             val ingredients = recipeIngredientsEditText.text.toString().split(",").map { it.trim() }
             val instructions = recipeInstructionsEditText.text.toString()
+            val category = categorySpinner.selectedItem.toString()
 
             if (name.isNotEmpty() && description.isNotEmpty() && ingredients.isNotEmpty() && instructions.isNotEmpty() && selectedImageUri != null) {
-                uploadImageAndSaveRecipe(name, description, ingredients, instructions)
+                uploadImageAndSaveRecipe(name, description, ingredients, instructions, category)
             } else {
                 Toast.makeText(this, "Please fill all fields and select an image", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -67,7 +78,7 @@ class NewRecipeActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImageAndSaveRecipe(name: String, description: String, ingredients: List<String>, instructions: String) {
+    private fun uploadImageAndSaveRecipe(name: String, description: String, ingredients: List<String>, instructions: String, category: String) {
         val imageRef = storage.reference.child("images/${UUID.randomUUID()}")
         selectedImageUri?.let { uri ->
             imageRef.putFile(uri)
@@ -79,7 +90,8 @@ class NewRecipeActivity : AppCompatActivity() {
                             ingredients = ingredients,
                             instructions = instructions,
                             imageUrl = downloadUrl.toString(),
-                            likes = 0
+                            likes = 0,
+                            category = category
                         )
                         saveRecipe(recipe)
                     }
@@ -92,7 +104,7 @@ class NewRecipeActivity : AppCompatActivity() {
 
     private fun saveRecipe(recipe: Recipe) {
         val docRef = db.collection("recipes").document()
-        recipe.id = docRef.id // שמור את ה-ID של המסמך
+        recipe.id = docRef.id
         docRef.set(recipe)
             .addOnSuccessListener {
                 Toast.makeText(this, "Recipe saved successfully", Toast.LENGTH_SHORT).show()
@@ -105,5 +117,4 @@ class NewRecipeActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error saving recipe", Toast.LENGTH_SHORT).show()
             }
     }
-
 }

@@ -23,7 +23,10 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var storage: FirebaseStorage
     private lateinit var popularRecipesRecyclerView: RecyclerView
     private lateinit var popularRecipesAdapter: RecipeAdapter
+    private lateinit var categorySpinner: Spinner
     private var allRecipes: MutableList<Recipe> = mutableListOf()
+    private var filteredRecipes: MutableList<Recipe> = mutableListOf()
+    private var selectedCategory: String = "All"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,15 +35,23 @@ class HomeActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
-
+        val buttonLogout: Button = findViewById(R.id.buttonLogout)
+        buttonLogout.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
         val searchEditText = findViewById<EditText>(R.id.editTextSearch)
         val categoriesLayout = findViewById<LinearLayout>(R.id.categoriesLayout)
         val addNewRecipeButton = findViewById<Button>(R.id.buttonAddNewRecipe)
         popularRecipesRecyclerView = findViewById(R.id.popularRecipesRecyclerView)
         popularRecipesRecyclerView.layoutManager = LinearLayoutManager(this)
+        categorySpinner = findViewById(R.id.categorySpinner)
 
         loadPopularRecipes()
-        loadCategories(categoriesLayout)
+        loadCategories()
 
         addNewRecipeButton.setOnClickListener {
             val intent = Intent(this, NewRecipeActivity::class.java)
@@ -56,6 +67,15 @@ class HomeActivity : AppCompatActivity() {
 
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedCategory = parent?.getItemAtPosition(position) as String
+                filterRecipes(searchEditText.text.toString())
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -84,6 +104,13 @@ class HomeActivity : AppCompatActivity() {
                 allRecipes = result.map { document ->
                     val recipe = document.toObject(Recipe::class.java)
                     recipe.id = document.id
+                    recipe.name = recipe.name ?: "Unknown"
+                    recipe.description = recipe.description ?: ""
+                    recipe.ingredients = recipe.ingredients ?: listOf()
+                    recipe.instructions = recipe.instructions ?: ""
+                    recipe.imageUrl = recipe.imageUrl ?: ""
+                    recipe.category = recipe.category ?: "Other"
+                    recipe.likes = recipe.likes ?: 0
                     recipe
                 }.toMutableList()
                 popularRecipesAdapter = RecipeAdapter(allRecipes)
@@ -94,18 +121,25 @@ class HomeActivity : AppCompatActivity() {
             }
     }
 
-    private fun loadCategories(layout: LinearLayout) {
-        // שיטת דוגמה לטעינת קטגוריות
-        // זהו מקום מתאים להוסיף קוד לטעינת קטגוריות מ- Firestore
+    private fun loadCategories() {
+        // Update the categories to match those in the NewRecipeActivity
+        val categories = listOf("All", "בשרי", "חלבי", "פרווה")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        categorySpinner.adapter = adapter
     }
 
     private fun addRecipeToList(recipe: Recipe) {
         allRecipes.add(0, recipe)
-        popularRecipesAdapter.notifyItemInserted(0)
+        filterRecipes("")
     }
 
     private fun filterRecipes(query: String) {
-        val filteredRecipes = allRecipes.filter { it.name.contains(query, ignoreCase = true) }
+        if (!::popularRecipesAdapter.isInitialized) return
+        filteredRecipes = allRecipes.filter {
+            (selectedCategory == "All" || it.category == selectedCategory) &&
+                    it.name.contains(query, ignoreCase = true)
+        }.toMutableList()
         popularRecipesAdapter.updateRecipes(filteredRecipes)
     }
 }

@@ -4,10 +4,11 @@ import java.io.Serializable
 
 data class Recipe(
     var id: String = "",
-    val name: String = "",
-    val description: String = "",
-    val ingredients: List<String> = listOf(),
-    val instructions: String = "",
-    val imageUrl: String = "",
+    var name: String = "",
+    var description: String? = "",
+    var ingredients: List<String> = listOf(),
+    var instructions: String? = "",
+    var imageUrl: String? = "",
     var likes: Int = 0,
+    var category: String? = ""
 )

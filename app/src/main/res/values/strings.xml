@@ -6,4 +6,9 @@
     <string name="sign_up_button">הרשם</string>
     <string name="search_for_recipes">חפש מתכונים</string>
     <string name="popular_recipes">מתכונים פופולרים</string>
+    <string-array name="recipe_categories">
+        <item>פרווה</item>
+        <item>בשרי</item>
+        <item>חלבי</item>
+    </string-array>
 </resources>

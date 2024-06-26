@@ -8,7 +8,18 @@
     android:background="#f7f7f7"
     tools:context=".HomeActivity">
 
-    <!-- סרגל חיפוש -->
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:layout_gravity="end"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#FF4081"
+        android:textColor="#FFFFFF"
+        android:padding="12dp"
+        android:textStyle="bold"/>
+
     <EditText
         android:id="@+id/editTextSearch"
         android:layout_width="match_parent"
@@ -21,51 +32,63 @@
         android:drawablePadding="10dp"
         android:inputType="text"/>
 
-    <!-- כותרת מתכונים פופולריים -->
+    <Spinner
+        android:id="@+id/categorySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Popular Recipes"
+        android:text="@string/popular_recipes"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginBottom="8dp"
         android:textColor="#333333"/>
 
-    <!-- תצוגה של מתכונים פופולריים -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/popularRecipesRecyclerView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/rounded_corner_background"
-        android:padding="8dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-    <!-- כותרת קטגוריות -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Categories"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"
-        android:textColor="#333333"/>
-
-    <!-- תצוגה של קטגוריות -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <LinearLayout
-            android:id="@+id/categoriesLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/rounded_corner_background"
-            android:padding="8dp">
-            <!-- פריטים של קטגוריות יתווספו כאן -->
-        </LinearLayout>
-    </ScrollView>
+            android:orientation="vertical">
 
-    <!-- כפתור להוספת מתכון חדש -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/popularRecipesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_corner_background"
+                android:padding="8dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Categories"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:textColor="#333333"/>
+
+            <LinearLayout
+                android:id="@+id/categoriesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/rounded_corner_background"
+                android:padding="8dp">
+                <!-- פריטים של קטגוריות יתווספו כאן -->
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
     <Button
         android:id="@+id/buttonAddNewRecipe"
         android:layout_width="match_parent"
@@ -74,6 +97,5 @@
         android:backgroundTint="#FF4081"
         android:textColor="#FFFFFF"
         android:padding="12dp"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp"/>
+        android:textStyle="bold"/>
 </LinearLayout>

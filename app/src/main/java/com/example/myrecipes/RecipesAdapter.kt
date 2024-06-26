@@ -30,9 +30,9 @@ class RecipeAdapter(
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
         val recipe = recipes[position]
-        holder.recipeNameTextView.text = recipe.name
-        holder.recipeLikesTextView.text = recipe.likes.toString()
-        Glide.with(holder.itemView.context).load(recipe.imageUrl).into(holder.recipeImageView)
+        holder.recipeNameTextView.text = recipe.name ?: "Unknown"
+        holder.recipeLikesTextView.text = recipe.likes?.toString() ?: "0"
+        Glide.with(holder.itemView.context).load(recipe.imageUrl ?: "").into(holder.recipeImageView)
 
         val currentUser = FirebaseAuth.getInstance().currentUser
         val db = FirebaseFirestore.getInstance()
