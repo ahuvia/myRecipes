@@ -27,6 +27,7 @@ class HomeActivity : AppCompatActivity() {
     private var allRecipes: MutableList<Recipe> = mutableListOf()
     private var filteredRecipes: MutableList<Recipe> = mutableListOf()
     private var selectedCategory: String = "All"
+    private lateinit var buttonConversion: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,12 +44,24 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        buttonConversion = findViewById(R.id.buttonConversion)
+        buttonConversion.setOnClickListener {
+            val intent = Intent(this, ConversionActivity::class.java)
+            startActivity(intent)
+        }
+
         val searchEditText = findViewById<EditText>(R.id.editTextSearch)
         val categoriesLayout = findViewById<LinearLayout>(R.id.categoriesLayout)
         val addNewRecipeButton = findViewById<Button>(R.id.buttonAddNewRecipe)
         popularRecipesRecyclerView = findViewById(R.id.popularRecipesRecyclerView)
         popularRecipesRecyclerView.layoutManager = LinearLayoutManager(this)
         categorySpinner = findViewById(R.id.categorySpinner)
+        val buttonUserProfile: Button = findViewById(R.id.buttonUserProfile)
+        buttonUserProfile.setOnClickListener {
+            val intent = Intent(this, UserProfileActivity::class.java)
+            startActivity(intent)
+        }
 
         loadPopularRecipes()
         loadCategories()

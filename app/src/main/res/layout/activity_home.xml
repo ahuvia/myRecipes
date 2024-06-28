@@ -8,23 +8,52 @@
     android:background="#f7f7f7"
     tools:context=".HomeActivity">
 
-    <Button
-        android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        android:layout_gravity="end"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#FF4081"
-        android:textColor="#FFFFFF"
-        android:padding="12dp"
-        android:textStyle="bold"/>
+        android:orientation="horizontal"
+        android:layout_gravity="end">
+
+        <Button
+            android:id="@+id/buttonLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:backgroundTint="#FF4081"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textStyle="bold"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/buttonConversion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Convert Amounts"
+            android:backgroundTint="#FF4081"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/buttonUserProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Profile"
+            android:layout_gravity="end"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#FF4081"
+            android:textColor="#FFFFFF"
+            android:padding="12dp"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
     <EditText
         android:id="@+id/editTextSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/search_for_recipes"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/search_bar_background"
         android:padding="12dp"
@@ -61,8 +90,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/popularRecipesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/rounded_corner_background"
                 android:padding="8dp"/>

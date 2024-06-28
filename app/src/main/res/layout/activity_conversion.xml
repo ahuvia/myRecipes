@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/editTextIngredientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ingredient (e.g., flour)"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/editTextSourceAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Source Amount"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/editTextSourceUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Source Unit (e.g., cups)"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/editTextTargetUnit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Target Unit (e.g., grams)"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/buttonConvert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Convert"/>
+
+    <TextView
+        android:id="@+id/textViewConversionResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"/>
+
+</LinearLayout>

@@ -6,9 +6,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 
@@ -16,12 +18,14 @@ class RecipeDetailActivity : AppCompatActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var commentsAdapter: CommentsAdapter
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_recipe_detail)
 
         db = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         val recipeNameTextView = findViewById<TextView>(R.id.textViewRecipeName)
         val recipeImageView = findViewById<ImageView>(R.id.imageViewRecipe)
@@ -33,6 +37,7 @@ class RecipeDetailActivity : AppCompatActivity() {
         val commentButton = findViewById<Button>(R.id.buttonComment)
         val commentsTitleTextView = findViewById<TextView>(R.id.textViewCommentsTitle)
         val recyclerViewComments = findViewById<RecyclerView>(R.id.recyclerViewComments)
+        val editButton = findViewById<Button>(R.id.buttonEdit)
 
         recyclerViewComments.layoutManager = LinearLayoutManager(this)
         commentsAdapter = CommentsAdapter()
@@ -47,11 +52,27 @@ class RecipeDetailActivity : AppCompatActivity() {
                         val recipe = document.toObject(Recipe::class.java)
                         if (recipe != null) {
                             recipeNameTextView.text = recipe.name
-                            Picasso.get().load(recipe.imageUrl).into(recipeImageView)
+//                            Picasso.get().load(recipe.imageUrl).into(recipeImageView)
                             recipeDescriptionTextView.text = recipe.description
                             ingredientsTextView.text = recipe.ingredients.joinToString("\n")
                             instructionsTextView.text = recipe.instructions
                             likesCountTextView.text = "Likes: ${recipe.likes}"
+                            if (recipe.imageUrl!!.isNotEmpty()) {
+                                Picasso.get().load(recipe.imageUrl).into(recipeImageView)
+                            } else {
+                                recipeImageView.setImageResource(R.drawable.meat)
+                            }
+                            val currentUser = auth.currentUser
+                            if (recipe.userId == currentUser?.uid) {
+                                editButton.visibility = View.VISIBLE
+                                editButton.setOnClickListener {
+                                    val intent = Intent(this, EditRecipeActivity::class.java)
+                                    intent.putExtra("RECIPE_ID", recipeId)
+                                    startActivity(intent)
+                                }
+                            } else {
+                                editButton.visibility = View.GONE
+                            }
 
                             likeButton.setOnClickListener {
                                 db.collection("recipes").document(recipeId)

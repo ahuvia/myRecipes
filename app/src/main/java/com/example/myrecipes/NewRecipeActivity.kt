@@ -58,9 +58,10 @@ class NewRecipeActivity : AppCompatActivity() {
             val ingredients = recipeIngredientsEditText.text.toString().split(",").map { it.trim() }
             val instructions = recipeInstructionsEditText.text.toString()
             val category = categorySpinner.selectedItem.toString()
+            val userId = auth.currentUser?.uid ?: ""
 
             if (name.isNotEmpty() && description.isNotEmpty() && ingredients.isNotEmpty() && instructions.isNotEmpty() && selectedImageUri != null) {
-                uploadImageAndSaveRecipe(name, description, ingredients, instructions, category)
+                uploadImageAndSaveRecipe(name, description, ingredients, instructions, category, userId)
             } else {
                 Toast.makeText(this, "Please fill all fields and select an image", Toast.LENGTH_SHORT).show()
             }
@@ -78,7 +79,7 @@ class NewRecipeActivity : AppCompatActivity() {
         }
     }
 
-    private fun uploadImageAndSaveRecipe(name: String, description: String, ingredients: List<String>, instructions: String, category: String) {
+    private fun uploadImageAndSaveRecipe(name: String, description: String, ingredients: List<String>, instructions: String, category: String, userId: String) {
         val imageRef = storage.reference.child("images/${UUID.randomUUID()}")
         selectedImageUri?.let { uri ->
             imageRef.putFile(uri)
@@ -91,7 +92,8 @@ class NewRecipeActivity : AppCompatActivity() {
                             instructions = instructions,
                             imageUrl = downloadUrl.toString(),
                             likes = 0,
-                            category = category
+                            category = category,
+                            userId = userId // שמירת userId כאן
                         )
                         saveRecipe(recipe)
                     }
