@@ -95,25 +95,6 @@
                 android:background="@drawable/rounded_corner_background"
                 android:padding="8dp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Categories"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"
-                android:textColor="#333333"/>
-
-            <LinearLayout
-                android:id="@+id/categoriesLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/rounded_corner_background"
-                android:padding="8dp">
-                <!-- פריטים של קטגוריות יתווספו כאן -->
-            </LinearLayout>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

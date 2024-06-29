@@ -52,7 +52,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
         val searchEditText = findViewById<EditText>(R.id.editTextSearch)
-        val categoriesLayout = findViewById<LinearLayout>(R.id.categoriesLayout)
         val addNewRecipeButton = findViewById<Button>(R.id.buttonAddNewRecipe)
         popularRecipesRecyclerView = findViewById(R.id.popularRecipesRecyclerView)
         popularRecipesRecyclerView.layoutManager = LinearLayoutManager(this)
