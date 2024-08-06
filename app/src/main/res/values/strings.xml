@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">My Recipes</string>
-    <string name="username_hint">שם משתמש</string>
-    <string name="email_hint">כתובת דוא"ל</string>
-    <string name="password_hint">סיסמה</string>
-    <string name="sign_up_button">הרשם</string>
-    <string name="search_for_recipes">חפש מתכונים</string>
-    <string name="popular_recipes">מתכונים פופולרים</string>
+    <string name="username_hint">name</string>
+    <string name="email_hint">email</string>
+    <string name="password_hint">password</string>
+    <string name="sign_up_button">signUp</string>
+    <string name="search_for_recipes">search</string>
+    <string name="popular_recipes">Popular recipes</string>
     <string-array name="recipe_categories">
         <item>פרווה</item>
         <item>בשרי</item>
